@@ -1,0 +1,20 @@
+.btn-primary-rd-shadow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    background: var(--primary);
+    padding: 10px 20px; 
+    gap: 10px;  
+    border-radius: 12px;
+    box-shadow: var(--red-shadow);
+    color: var(--text-white);
+    font-size: 1rem;
+}
+
+.btn-primary-rd-shadow:hover{
+    background: var(--secondary);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
