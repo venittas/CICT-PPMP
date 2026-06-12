@@ -1,11 +1,17 @@
 @import "tailwindcss";
 
 .login-page-container {
-    @apply flex justify-center py-3 max-md:px-4 max-sm:px-0 max-sm:py-0;
-    background-color: var(--sf-bg-secondary);
+    @apply flex justify-center items-center py-3 max-md:px-4 max-sm:px-0 max-sm:py-0 min-h-screen;
+    background: 
+        linear-gradient(
+            color-mix(in srgb, var(--text-black) 50%, transparent), 
+            color-mix(in srgb, var(--primary) 90%, transparent)
+        ),
+        url("../../assets/univlogo/cict_logo.svg") right 1% center / 50% auto no-repeat,
+        url("../../assets/univlogo/bulsu_logo.svg") left 1% center / 30% auto no-repeat var(--primary);
 
     & .left-right-container {
-        @apply flex flex-row items-stretch justify-start w-6xl h-screen overflow-hidden shadow-2xl rounded-xl max-md:flex-col max-md:w-full;
+        @apply flex flex-row items-stretch justify-start w-6xl overflow-hidden shadow-2xl rounded-xl h-[calc(100vh-2rem)] max-md:flex-col max-md:w-full; 
     }
 
     & .form-container {
