@@ -69,7 +69,7 @@ export default function Dashboard(){
         },
     ];
 
-    const inLieuAlert:number = 5; // Example ng kung ilan ang pending in-lieu requests
+    const inLieuAlert:number = 1; // Example ng kung ilan ang pending in-lieu requests
 
     return (
         <main className="page-container dashboard">
