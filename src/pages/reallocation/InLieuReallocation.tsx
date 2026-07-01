@@ -2,11 +2,13 @@ import "./in-lieu-reallocation.css";
 import { IconPrinter, IconTransfer, IconX, IconCheck, IconSearch, IconShoppingCart, IconTransform } from '@tabler/icons-react';
 import alabIcon from "../../assets/icons/alab.svg";
 import NewItemCard from "../../components/cards/new_item_card/NewItemCard";
+import LieuItemCard from "../../components/cards/lieu_item_card/LieuItemCard";
 import { useState } from "react";
+import InfoNote from "../../components/notes/info_note/InfoNote";
+import WarningNote from "../../components/notes/warning_note/WarningNote";
 
 export default function InLieuReallocation() {
-    const selectedItemsValue = 0;
-
+    
     interface NewItem {
         id: number;
         name: string;
@@ -19,31 +21,73 @@ export default function InLieuReallocation() {
         { id: Date.now(), name: "", measurementUnit: "", quantity: 1, unitPrice: 0 }
     ]);
 
-    const requiredBudget = newItemsArray.reduce((sum, item) => {
-        return sum + (item.quantity * item.unitPrice);
-    }, 0);
+    const requiredBudget = newItemsArray.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+
+    interface SelectedLieuItem {
+        id: string;
+        itemDescription: string;
+        unitMeasurement: string;
+        reduceQuantity: number;
+        priceCatalogue: number;
+    }
+
+    const [selectedLieuItems, setSelectedLieuItems] = useState<SelectedLieuItem[]>([]);
+
+    const selectedItemsValue = selectedLieuItems.reduce((sum, item) => sum + (item.reduceQuantity * item.priceCatalogue), 0);
 
     const remainingBudget = selectedItemsValue - requiredBudget;
 
-    const handleAddItem = () => {
-        setNewItemsArray([...newItemsArray, { id: Date.now(), name: "", measurementUnit: "", quantity: 1, unitPrice: 0 }]);
+    const isNewItemsValid = newItemsArray.every(item => 
+        item.name.trim() !== "" && 
+        item.measurementUnit.trim() !== "" && 
+        item.quantity > 0 && 
+        item.unitPrice > 0
+    );
+
+    const handleAddItem = () => setNewItemsArray([...newItemsArray, { id: Date.now(), name: "", measurementUnit: "", quantity: 1, unitPrice: 0 }]);
+    const handleDeleteItem = (id: number) => setNewItemsArray(newItemsArray.filter(item => item.id !== id));
+    const handleUpdateItem = (id: number, field: keyof NewItem, value: string | number) => {
+        setNewItemsArray(prev => prev.map(item => item.id === id ? { ...item, [field]: value } : item));
     };
 
-    const handleDeleteItem = (idToDelete: number) => {
-        setNewItemsArray(newItemsArray.filter(item => item.id !== idToDelete));
+    const handleToggleLieuItem = (item: any) => {
+        const isSelected = selectedLieuItems.some(selected => selected.id === item.id);
+        if (isSelected) {
+            setSelectedLieuItems(prev => prev.filter(selected => selected.id !== item.id));
+        } else {
+            setSelectedLieuItems(prev => [...prev, {
+                id: item.id,
+                itemDescription: item.itemDescription,
+                unitMeasurement: item.unitMeasurement,
+                reduceQuantity: 0,
+                priceCatalogue: item.priceCatalogue
+            }]);
+        }
     };
 
-    const handleUpdateItem = (id: number, field: 'name' | 'measurementUnit' | 'quantity' | 'unitPrice', value: string | number) => {
-        setNewItemsArray(prevItems => 
-            prevItems.map(item => 
-                item.id === id ? { ...item, [field]: value } : item
-            )
-        );
+    const handleUpdateLieuQuantity = (id: string, quantity: number) => {
+        setSelectedLieuItems(prev => prev.map(item => 
+            item.id === id ? { ...item, reduceQuantity: quantity } : item
+        ));
     };
 
     const handleSaveToDatabase = () => {
-        console.log("Payload ready for database:", newItemsArray);
+        const payload = {
+            status: "Pending Approval",
+            requiredBudget: requiredBudget,
+            lieuFundedValue: selectedItemsValue,
+            itemsToProcure: newItemsArray,
+            itemsToReduce: selectedLieuItems 
+        };
+        console.log("Full JSON Payload ready for database:", payload);
     };
+
+    const mockPPMPData = [
+        { id: "item-001", itemDescription: "Solid State Drive (1TB NVMe Gen4)", unitMeasurement: "piece", plannedQuantity: 10, availableQuantity: 9, pendingQuantity: 1, fulfilledQuantity: 0, priceCatalogue: 4500.00, totalPrice: 45000.00 },
+        { id: "item-002", itemDescription: "LED Monitor (24-inch IPS, 144Hz)", unitMeasurement: "unit", plannedQuantity: 5, availableQuantity: 5, pendingQuantity: 0, fulfilledQuantity: 0, priceCatalogue: 8500.00, totalPrice: 42500.00 },
+        { id: "item-003", itemDescription: "Mechanical Keyboard (Hot-swappable)", unitMeasurement: "piece", plannedQuantity: 15, availableQuantity: 5, pendingQuantity: 10, fulfilledQuantity: 0, priceCatalogue: 2200.00, totalPrice: 33000.00 },
+        { id: "item-004", itemDescription: "Mechanical Keyboard (Hot-swappable)", unitMeasurement: "piece", plannedQuantity: 15, availableQuantity: 0, pendingQuantity: 10, fulfilledQuantity: 0, priceCatalogue: 2200.00, totalPrice: 33000.00 }
+    ];
 
     return (
         <main className="page-container reallocation">
@@ -66,39 +110,30 @@ export default function InLieuReallocation() {
                         <h3>Remaining</h3>
                         <p>PHP {remainingBudget.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                     </div>
-                    {remainingBudget >= 0 ? (
-                        <IconCheck size={24} className="check-icon" color="green" />
-                    ) : (
-                        <IconX size={24} className="x-icon" color="red" />
-                    )}
+                    {remainingBudget >= 0 ? <IconCheck size={24} className="check-icon" color="green" /> : <IconX size={24} className="x-icon" color="red" />}
                 </div>
+
+                <div className="note-container">
+                    <WarningNote message="Please ensure that all fields must be filled out before proceeding." />
+                </div>
+
                 <div className="new-lieu-items-container">
                     <div className="new-items-container">
                         <div className="search-container">
                             <IconSearch size={24} />
-                            <input type="text" placeholder="Search Item if already exist and you want to add Qty..." className="search-input" />
+                            <input type="text" placeholder="Search Item to be “In Lieu of” new Items..." className="search-input" />
                         </div>
                         <div className="title-button-container">
                             <h3><IconShoppingCart size={24} color="green"/> New Needs Cart</h3>
-                            <button className="btn-secondary cursor-pointer" onClick={handleAddItem}>
-                                + Add Item
-                            </button>
+                            <button className="btn-secondary cursor-pointer" onClick={handleAddItem}>+ Add Item</button>
                         </div>
-                        <div className="new-items-card-container flex flex-col gap-4">
+                        <div className="new-items-card-container">
                             {newItemsArray.map((item) => (
-                                <NewItemCard 
-                                    key={item.id} 
-                                    id={item.id}
-                                    name={item.name}
-                                    measurementUnit={item.measurementUnit}
-                                    quantity={item.quantity}
-                                    unitPrice={item.unitPrice}
-                                    onDelete={handleDeleteItem}
-                                    onUpdate={handleUpdateItem}
-                                />
+                                <NewItemCard key={item.id} id={item.id} name={item.name} measurementUnit={item.measurementUnit} quantity={item.quantity} unitPrice={item.unitPrice} onDelete={handleDeleteItem} onUpdate={handleUpdateItem} />
                             ))}
                         </div>
                     </div>
+                    
                     <div className="lieu-items-container">
                         <div className="search-container">
                             <IconSearch size={24} />
@@ -106,32 +141,49 @@ export default function InLieuReallocation() {
                         </div>
                         <div className="title-button-container">
                             <h3><IconTransform size={24} color="red"/> Available Lieu Pool</h3>
-                            <button className="btn-alab">
-                                <img src={alabIcon} alt="ALAB Icon" className="w-5 h-5" />
-                                Suggest Optimization
-                            </button>
+                            <button className="btn-alab"><img src={alabIcon} alt="ALAB Icon" className="w-5 h-5" />Suggest Optimization</button>
                         </div>
                         <div className="lieu-items-card-container">
-                                
+                            {mockPPMPData.map((item) => {
+                                const selectedItemInfo = selectedLieuItems.find(selected => selected.id === item.id);
+                                const isSelected = !!selectedItemInfo;
+                                const currentReduceQty = selectedItemInfo ? selectedItemInfo.reduceQuantity : 0;
+
+                                return item.availableQuantity > 0 && (
+                                    <LieuItemCard 
+                                        key={item.id}
+                                        id={item.id}
+                                        itemName={item.itemDescription}
+                                        unitMeasurement={item.unitMeasurement}
+                                        priceCatalog={item.priceCatalogue}
+                                        plannedQuantity={item.plannedQuantity}
+                                        availableQuantity={item.availableQuantity}
+                                        isSelected={isSelected}
+                                        reduceQuantity={currentReduceQty}
+                                        onToggle={() => handleToggleLieuItem(item)}
+                                        onQuantityChange={handleUpdateLieuQuantity}
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
+                
                 <div className="button-container">
-                    {remainingBudget >= 0 && newItemsArray.length > 0 && !(requiredBudget <= 0) ? (
-                        <button className="btn-secondary"><IconPrinter size={24} />Print Preview</button>
-                    ) : (
-                        <button className="btn-secondary" disabled><IconPrinter size={24} />Print Preview</button>
-                    )}
+                    <button 
+                        className="btn-secondary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" 
+                        disabled={remainingBudget < 0 || newItemsArray.length === 0 || requiredBudget <= 0 || !isNewItemsValid}
+                    >
+                        <IconPrinter size={24} />Print Preview
+                    </button>
                     
-                    {remainingBudget >= 0 && newItemsArray.length > 0 && !(requiredBudget <= 0) ? (
-                        <button className="btn-primary-rd-shadow" onClick={handleSaveToDatabase}>
-                            <IconTransfer size={24} />Apply for Approval
-                        </button>
-                    ) : (
-                        <button className="btn-primary-rd-shadow" disabled>
-                            <IconTransfer size={24} />Apply for Approval
-                        </button>
-                    )}
+                    <button 
+                        className="btn-primary-rd-shadow disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[var(--primary)]" 
+                        onClick={handleSaveToDatabase} 
+                        disabled={remainingBudget < 0 || newItemsArray.length === 0 || requiredBudget <= 0 || !isNewItemsValid}
+                    >
+                        <IconTransfer size={24} />Apply for Approval
+                    </button>
                 </div>
             </div>
         </main>

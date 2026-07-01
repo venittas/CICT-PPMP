@@ -1,7 +1,14 @@
 @import "tailwindcss";
 
 .table-container {
-    @apply flex flex-col w-full bg-white rounded-xl shadow-xl overflow-hidden h-[calc(100vh-200px)] max-md:h-[calc(100vh-100px)] transition-all duration-300 ease-in-out;
+    @apply flex flex-col w-full bg-white rounded-xl shadow-xl overflow-hidden transition-all duration-300 ease-in-out;
+
+    &.masterlist{
+        @apply h-[calc(100vh-200px)] max-md:h-[calc(100vh-100px)];
+    }
+    &.approvals{
+        @apply h-[calc(100vh-120px)] max-md:h-[calc(100vh-100px)];
+    }
 
     & > .table-title-container{
         @apply flex flex-row flex-wrap items-center gap-5 p-5 shrink-0 max-md:items-start max-md:gap-3 max-md:px-3 max-md:py-3 max-md:justify-center;
@@ -46,43 +53,54 @@
                     @apply text-xs font-light;
                     color: var(--text-gray);
                 }
+                }
+            }
+            & > tbody{ 
+                & > tr {
+                    @apply border-b border-gray-200 transition-all duration-300 ease-in-out hover:bg-gray-100;
 
-                &:nth-child(1) {
-                    @apply pl-5;
-                }
-                &:last-child {
-                    @apply pr-5;
-                }
-                &:nth-child(4) {
-                    & > h3 {
-                        @apply text-blue-500;
+                    &:last-child {
+                        @apply border-b-0;
                     }
-                }
-                &:nth-child(5) {
-                    & > h3 {
-                        @apply text-yellow-500;
-                    }
-                }
-                &:nth-child(6) {
-                    & > h3 {
-                        @apply text-green-500;
+                    
+                    & > td {
+                        @apply py-2 text-xs font-semibold text-center w-[10%];
+
+                        & > .btn-solid {
+                            @apply flex flex-row items-center px-2 py-2 gap-0 rounded-xl transition-all duration-300 ease-in-out;
+                            font-size: 0.5rem;
+                        }
                     }
                 }
             }
-        }
-        & > tbody{ 
-            & > tr {
-                @apply border-b border-gray-200 transition-all duration-300 ease-in-out hover:bg-gray-100;
 
-                &:last-child {
-                    @apply border-b-0;
-                }
-                
-                & > td {
-                    @apply py-2 text-xs font-semibold text-center w-[10%];
-
+            &.masterlist{
+                & > thead > tr > th{
                     &:nth-child(1) {
-                        @apply pl-5;
+                    @apply pl-5;
+                    }
+                    &:last-child {
+                        @apply pr-5;
+                    }
+                    &:nth-child(4) {
+                        & > h3 {
+                            @apply text-blue-500;
+                        }
+                    }
+                    &:nth-child(5) {
+                        & > h3 {
+                            @apply text-yellow-500;
+                        }
+                    }
+                    &:nth-child(6) {
+                        & > h3 {
+                            @apply text-green-500;
+                        }
+                    }
+                }
+                & > tbody > tr > td{
+                    &:nth-child(1) {
+                            @apply pl-5;
                     }
                     &:nth-child(4) {
                         @apply text-blue-500;
@@ -96,14 +114,56 @@
                     &:last-child {
                         @apply pr-5;
                     }
+                }
+            }
 
-                    & > .btn-solid {
-                        @apply flex flex-row items-center px-2 py-2 gap-0 rounded-xl transition-all duration-300 ease-in-out;
-                        font-size: 0.5rem;
+            &.approvals{
+                & > thead > tr > th{
+                    &:nth-child(3) {
+                        & > h3 {
+                            @apply text-red-500;
+                        }
+                    }
+                    &:nth-child(4) {
+                        & > h3 {
+                            @apply text-green-500;
+                        }
+                    }
+                }
+                & > tbody > tr > td{
+                    & > .budget-impact{
+                        @apply flex flex-col items-center justify-center gap-1;
+
+                        & > span {
+                            @apply text-xs font-semibold;
+
+                            &:nth-child(1) {
+                                @apply text-red-500;
+                            }
+                            &:nth-child(2) {
+                                @apply text-green-500;
+                            }
+                        }
+                    }
+                    & > .original-items > .original-item > span {
+                        @apply text-[10px] font-semibold text-red-500;
+                    }
+                    & > .proposed-items > .proposed-item > span {
+                        @apply text-[10px] font-semibold text-green-500;
+                    }
+                    & > .status-container {
+                        @apply flex flex-row items-center justify-center w-full;
+                    }
+                    & > .button-container {
+                        @apply flex flex-row items-center justify-center gap-1 w-full max-md:flex-col;
+
+                        & > .btn-solid {
+                            @apply flex flex-row items-center px-2 py-2 gap-1 rounded-xl transition-all duration-300 ease-in-out;
+                            font-size: 0.5rem;
+                        }
                     }
                 }
             }
         }
-    }
     }
 }

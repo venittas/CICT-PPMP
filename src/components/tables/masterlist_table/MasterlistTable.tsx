@@ -3,7 +3,7 @@ import { IconSearch ,IconFileTypeXls,IconFilter,IconFileStack  } from '@tabler/i
 
 export default function MasterlistTable({itemCount, unitCount, exportFunction, data}: {itemCount: number, unitCount: number, exportFunction?: () => void, data: any[]}) {
     return (
-        <div className="table-container">
+        <div className="table-container masterlist">
             <div className="table-title-container">
                 <div className="table-title">
                     <h2 className="table-title">Master PPMP Table</h2>

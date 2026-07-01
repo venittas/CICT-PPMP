@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+.lieu-item-card{
+    @apply flex flex-col items-start justify-start gap-2 p-3 rounded-xl border border-gray-300 w-full;
+
+    &.selected{
+        @apply bg-red-800/10 text-red-800;
+        border-color: var(--primary);
+    }
+
+    & > .upper-content-container{
+        @apply flex flex-row items-center justify-start w-full;
+
+        & > .icon-container{
+            @apply cursor-pointer;
+            & > .icon{
+                @apply text-gray-300 hover:text-gray-400 text-2xl;
+                &.selected{
+                    color: var(--primary);
+                }
+            }
+        }
+
+        & > .item-description{
+            @apply flex-1 flex flex-col items-start justify-start gap-1;
+
+            & > h3{
+                @apply text-sm font-semibold;
+            }
+            & > p{
+                @apply text-xs;
+                color: var(--text-gray);
+            }
+        }
+
+        & > .available-quantity-container{
+            @apply flex flex-row items-center justify-center py-1 px-3 rounded-xl gap-1 border border-gray-300;
+
+            & > p{
+                @apply text-xs font-semibold;
+                color: var(--text-gray);
+            }
+        }
+    }
+
+    & > .lower-content-container{
+        @apply flex flex-row items-center justify-between w-full px-1;
+
+        & > .input-group{
+            @apply flex flex-row items-center justify-start gap-1;
+
+            & > label{
+                @apply text-xs font-semibold;
+                color: var(--text-gray);
+            }
+            & > input{
+                @apply w-20 px-2 py-1 rounded-lg border border-gray-300 text-sm font-semibold bg-gray-100;
+            }
+        }
+        & > p{
+            @apply text-sm font-semibold;
+            color: var(--primary);
+        }
+
+        &.hidden{
+            @apply hidden;
+        }
+    }
+}
