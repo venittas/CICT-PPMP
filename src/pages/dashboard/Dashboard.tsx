@@ -1,7 +1,7 @@
 import { type JSX } from 'react';
 import DashboardCard from '../../components/cards/dashboard_card/DashboardCard';
 import './dashboard.css';
-import { IconWallet, IconFilter2Check, IconStatusChange, IconCurrencyDollarOff, IconGitPullRequestDraft, IconChecklist, IconTimelineEventText, IconScale, IconChartBarOff, IconTransform, IconClockDollar, IconAlertCircle, IconArrowRight } from '@tabler/icons-react';
+import { IconWallet, IconFilter2Check, IconStatusChange, IconCurrencyDollarOff, IconGitPullRequestDraft, IconChecklist, IconScale, IconChartBarOff, IconTransform, IconClockDollar, IconAlertCircle, IconArrowRight } from '@tabler/icons-react';
 import DashboardProcurementCard from '../../components/cards/dashboard_procurement_card/DashboardProcurementCard';
 import alab from '../../assets/icons/alab.svg';
 import { Link } from 'react-router';
@@ -103,9 +103,6 @@ export default function Dashboard(){
             <div className="lower-dashboard-container">
                 <div className="procurement-timeline-container">
                     <div className="procurement-timeline-header">
-                        <div className="icon royal-red">
-                            <IconTimelineEventText size={40}/>
-                        </div>
                         <div className="title-container">
                             <h2>Procurement Timeline</h2>
                             <p>Track the progress of your procurement activities</p>
@@ -157,7 +154,7 @@ export default function Dashboard(){
                             value={50000}
                             userFullName="John Doe"/>
                             <DashboardProcurementCard 
-                            icon="pr"
+                            icon="requested"
                             title="Purchase Request" 
                             description="Purchase request  of 10 SSD is requested" 
                             date="2023-10-15" 
@@ -166,65 +163,15 @@ export default function Dashboard(){
                             <DashboardProcurementCard 
                             icon="upload"
                             title="Purchase Request" 
-                            description="Purchase request  of 10 SSD is requested" 
+                            description="Purchase request  of 10 SSD is requestedsddsdd" 
                             date="2023-10-15" 
                             value={50000}
-                            userFullName="John Doe"/>
-                            <DashboardProcurementCard 
-                            icon="pr"
-                            title="Purchase Request" 
-                            description="Purchase request  of 10 SSD is requested" 
-                            date="2023-10-15" 
-                            value={50000}
-                            userFullName="John Doe"/>
-                            <DashboardProcurementCard 
-                            icon="pr"
-                            title="Purchase Request" 
-                            description="Purchase request  of 10 SSD is requested" 
-                            date="2023-10-15" 
-                            value={50000}
-                            userFullName="John Doe"/>
-                            <DashboardProcurementCard 
-                            icon="pr"
-                            title="Purchase Request" 
-                            description="Purchase request  of 10 SSD is requested" 
-                            date="2023-10-15" 
-                            value={50000}
-                            userFullName="John Doe"/>
-                            <DashboardProcurementCard 
-                            icon="arrived"
-                            title="Purchase Request" 
-                            description="Purchase request  of 10 SSD is requested" 
-                            date="2023-10-15" 
-                            value={50000}
-                            userFullName="John Doe"/>
-                            <DashboardProcurementCard 
-                            icon="rejected"
-                            title="Purchase Request" 
-                            description="Purchase request  of 10 SSD is requested" 
-                            date="2023-10-15" 
-                            value={50000}
-                            userFullName="John Doe"/>
-                            <DashboardProcurementCard 
-                            icon="cancel"
-                            title="Purchase Request" 
-                            description="Purchase request  of 10 SSD is requested" 
-                            date="2023-10-15" 
-                            value={50000}
-                            userFullName="John Doe"/>
-                            <DashboardProcurementCard
-                            title="Purchase Request" 
-                            description="Purchase request  of 10 SSD is requested" 
-                            date="2023-10-15"
                             userFullName="John Doe"/>
                     </div>
                 </div>
 
                 <div className="ai-features-container">
                     <div className="ai-features-header">
-                        <div className="icon alab">
-                            <img src={alab} alt="ALAB Icon" className="alab-icon" style={{ width: '25px', height: '35px' }}/>
-                        </div>
                         <div className="title-container">
                             <h2>Bulk Balancing Optimization</h2>
                             <p>In Lieu Assistant</p>
@@ -232,7 +179,7 @@ export default function Dashboard(){
                     </div>
                     <div className="content-container">
                         <Link to="/in-lieu-reallocation" className="btn-alab">
-                            <IconScale size={24} className="alab-link-icon"/>
+                            <img src={alab} alt="ALAB Icon" className="alab-link-icon" style={{ width: '25px', height: '25px' }}/>
                             <span>Optimize Your Budget with ALAB</span>
                         </Link>
 

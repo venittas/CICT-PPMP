@@ -1,37 +1,33 @@
 @import "tailwindcss";
 
-.dashboard-procurement-card{
-    @apply flex flex-row items-center justify-start p-2 gap-2 w-full rounded-xl;
+.dashboard-procurement-card {
+    @apply flex flex-row items-stretch justify-start p-2 gap-4 w-full rounded-xl;
 
-    & > .icon-container{
-        @apply flex flex-col items-center justify-center relative;
+    & > .icon-container {
+        @apply flex flex-col items-center justify-start relative;
 
-        & .vertical-line{
-            @apply w-1 h-8 mt-1 rounded-full bg-gray-300/80 absolute top-full left-1/2 -translate-x-1/2;
+        &::after {
+            @apply w-1 bg-gray-300 absolute top-10 bottom-[-16px] left-1/2 -translate-x-1/2 content-[''] rounded-full;
         }
     }
 
-    & > .card-content{
+    & > .card-content {
         @apply w-full;
 
-        & > h3{
-            @apply text-sm font-semibold;
+        & > h3 {
+            @apply text-xs font-semibold;
         }
-        & > p{
+        & > p {
             @apply text-xs;
             color: var(--text-gray);
         }
-        & > .user-name{
-            @apply text-[10px] font-semibold;
-            color: var(--text-gray);
-        }
-        & > .date-value-container{
-            @apply flex flex-row items-center justify-between w-full;
-            & > span{
-                @apply text-xs font-semibold;
+        & > .date-value-container {
+            @apply flex flex-row items-center justify-between w-full mt-1;
+            & > span {
+                @apply text-[10px] font-semibold;
                 color: var(--text-gray);
             }
-            & > p{
+            & > p {
                 @apply text-xs font-semibold text-blue-500;
             }
         }
@@ -39,5 +35,9 @@
 
     &:nth-child(even) {
         @apply bg-gray-100/80;
+    }
+
+    &:last-child > .icon-container::after {
+        @apply hidden;
     }
 }

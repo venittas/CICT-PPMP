@@ -16,7 +16,7 @@
             }
         }
         & > .price-balancing-container{
-            @apply flex flex-row flex-wrap items-center justify-between w-full p-5 rounded-xl border border-gray-300 bg-gray-500/20;
+            @apply flex flex-row flex-wrap items-center justify-between w-full p-5 rounded-xl border border-gray-300 bg-gray-500/20 shadow-lg;
 
             & > .required-budget-container, & > .available-budget-container, & > .remaining-budget-container {
                 @apply flex flex-col items-start justify-center;
@@ -51,7 +51,7 @@
             @apply flex flex-row flex-wrap items-center justify-center gap-5 w-full max-md:flex-col;
 
             & > .new-items-container, & > .lieu-items-container{
-                @apply flex-1 flex flex-col items-center justify-center gap-2 bg-white rounded-xl shadow-xl p-5 w-full;
+                @apply flex-1 flex flex-col items-center justify-center gap-2 rounded-xl shadow-xl p-5 w-full;
 
                 & > .search-container {
                         @apply w-full;

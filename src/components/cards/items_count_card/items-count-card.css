@@ -30,7 +30,7 @@
             @apply text-xs font-semibold;
         }
         & > p{
-            @apply text-base font-black;
+            @apply text-sm font-bold;
         }
     }
 }

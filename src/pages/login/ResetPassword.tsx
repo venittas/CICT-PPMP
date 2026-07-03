@@ -31,7 +31,6 @@ export default function ResetPassword(){
         const temp: string = e.target.value;
         setPassword(temp);
 
-        // Update password strength indicators
         setEightCharacter(temp.length >= 8);
         setUpperLowerCase(/(?=.*[a-z])(?=.*[A-Z])/.test(temp));
         setNumber(/\d/.test(temp));

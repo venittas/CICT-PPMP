@@ -2,7 +2,7 @@ import { NavLink } from 'react-router';
 import './nav.css';
 import bulsu from '../../assets/univlogo/bulsu_logo.svg';
 import cict from '../../assets/univlogo/cict_logo.svg';
-import arrow_primary from '../../assets/designs/arrow_primary.svg';
+import arrow_secondary from '../../assets/designs/arrow_secondary.svg';
 import { IconLayoutDashboard, IconClipboardList, IconChartColumn, IconTransform, IconChecklist, IconUsers, IconSettings2, IconCalendarWeek, IconLogout2 } from '@tabler/icons-react';
 import type { JSX } from 'react/jsx-dev-runtime';
 
@@ -35,7 +35,7 @@ export default function Nav() {
                 </div>
                 <div className="hero-text">
                     <h1><span>CICT - </span><span>PPMP</span></h1>
-                    <img src={arrow_primary} alt="Arrow Icon" />
+                    <img src={arrow_secondary} alt="Arrow Icon" />
                     <p>Bulacan State University</p>
                 </div>
             </div>

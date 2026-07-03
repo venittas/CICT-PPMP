@@ -77,10 +77,10 @@ export default function Header() {
           Upload PPMP
         </button>
       )}
-      <button className="notification-button">
+      {/*<button className="notification-button">
         <span className="notification-count">3</span>
         <IconBell size={24} />
-      </button>
+      </button>*/}
       <div className="user-profile">
         <div className="user-icon">
           <IconUser size={24} />

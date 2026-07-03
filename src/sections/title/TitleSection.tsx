@@ -29,7 +29,7 @@ export default function Title(){
                 intelligent budget optimization, automated PR generation, 
                 and real-time tracking.
             </p>
-            <Link to="/login" className='btn-primary-rd-shadow'><IconLayoutDashboard size={25} stroke={2}/> <strong>Sign In</strong></Link>
+            <Link to="/login" className='btn-primary-rd-shadow landing'><IconLayoutDashboard size={25} stroke={2}/> <strong>Sign In</strong></Link>
         </section>
     );
 }
