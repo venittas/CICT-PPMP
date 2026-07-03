@@ -1,56 +1,77 @@
 import './dashboard-procurement-card.css';
-import { IconClockX, IconFileStack, IconClockCheck, IconTransform, IconCloudUpload, IconClock, IconClockCancel } from '@tabler/icons-react';
+import { 
+    IconClockX, 
+    IconFileStack, 
+    IconClockCheck, 
+    IconTransform, 
+    IconCloudUpload, 
+    IconClock, 
+    IconClockCancel 
+} from '@tabler/icons-react';
 
-export default function DashboardProcurementCard({icon, title, description, date, value, userFullName}: {icon?: string, title: string, description: string, date: string, value?: number, userFullName?: string}) {
-    const color = (icon: string) => {
-        switch(icon) {
-            case 'rejected':
-                return 'red';
-            case 'approved':
-                return 'green';
-            case 'arrived':
-                return 'green';
-            case 'requested':
-                return 'blue';
-            case 'reallocate':
-                return 'orange';
-            case 'upload':
-                return 'purple';
-            case 'cancel':
-                return 'gray';
-            default:
-                return 'yellow';
-        }
-    }
+interface ProcurementCardProps {
+    icon?: string;
+    title: string;
+    description: string;
+    date: string;
+    value?: number;
+    userFullName?: string;
+}
+
+export default function DashboardProcurementCard({
+    icon = 'default', 
+    title, 
+    description, 
+    date, 
+    value, 
+    userFullName
+}: ProcurementCardProps) {
+
+    const colorMap: Record<string, string> = {
+        rejected: 'red',
+        approved: 'green',
+        arrived: 'green',
+        requested: 'blue',
+        reallocate: 'orange',
+        upload: 'purple',
+        cancel: 'gray',
+        default: 'yellow'
+    };
+
+    const iconMap: Record<string, React.ReactNode> = {
+        rejected: <IconClockX size={18} />,
+        approved: <IconClockCheck size={18} />,
+        arrived: <IconClockCheck size={18} />,
+        requested: <IconFileStack size={18} />,
+        reallocate: <IconTransform size={18} />,
+        upload: <IconCloudUpload size={18} />,
+        cancel: <IconClockCancel size={18} />,
+        default: <IconClock size={18} />
+    };
+
+    const activeColor = colorMap[icon] || colorMap.default;
+    const ActiveIcon = iconMap[icon] || iconMap.default;
+
     return (
         <div className="dashboard-procurement-card">
             <div className="icon-container">
-                <div className={`icon ${color(icon? icon : 'default')}`}>
-                    {icon ? (
-                        <>
-                            {icon === 'rejected' && <IconClockX size={24} />}
-                            {icon === 'requested' && <IconFileStack size={24} />}
-                            {icon === 'approved' && <IconClockCheck size={24} />}
-                            {icon === 'arrived' && <IconClockCheck size={24} />}
-                            {icon === 'reallocate' && <IconTransform size={24} />}
-                            {icon === 'upload' && <IconCloudUpload size={24} />}
-                            {icon === 'cancel' && <IconClockCancel size={24} />}
-                        </>
-                    ) : (
-                        <IconClock size={24} />   
-                    )}
+                <div className={`icon ${activeColor}`}>
+                    {ActiveIcon}
                 </div>
-                <div className="vertical-line"></div>
             </div>
+            
             <div className="card-content">
                 <h3>{title}</h3>
                 <p>{description}</p>
                 <div className="date-value-container">
-                    <span>{date}</span>
-                    {value !== undefined && <p className="value">PHP {value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>}
+                    <span>Made by: {userFullName} • {date}</span>
+                    {value !== undefined && (
+                        <p className="value">
+                            PHP {value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </p>
+                    )}
                 </div>
-                <p className="user-name">Made by: {userFullName}</p>
             </div>
         </div>
-    )
+    );
 }

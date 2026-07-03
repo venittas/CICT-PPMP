@@ -70,6 +70,18 @@
                             @apply flex flex-row items-center px-2 py-2 gap-0 rounded-xl transition-all duration-300 ease-in-out;
                             font-size: 0.5rem;
                         }
+
+                        & > .button-container {
+                            @apply flex flex-row items-center justify-center gap-1 w-full max-md:flex-col;
+
+                            & > .btn-solid {
+                                @apply flex flex-row items-center px-2 py-2 gap-1 rounded-xl transition-all duration-300 ease-in-out;
+                                font-size: 0.5rem;
+                            }
+                        }
+                        & > .status-container {
+                            @apply flex flex-row items-center justify-center w-full;
+                        }
                     }
                 }
             }
@@ -150,17 +162,6 @@
                     }
                     & > .proposed-items > .proposed-item > span {
                         @apply text-[10px] font-semibold text-green-500;
-                    }
-                    & > .status-container {
-                        @apply flex flex-row items-center justify-center w-full;
-                    }
-                    & > .button-container {
-                        @apply flex flex-row items-center justify-center gap-1 w-full max-md:flex-col;
-
-                        & > .btn-solid {
-                            @apply flex flex-row items-center px-2 py-2 gap-1 rounded-xl transition-all duration-300 ease-in-out;
-                            font-size: 0.5rem;
-                        }
                     }
                 }
             }

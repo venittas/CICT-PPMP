@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+.page-container.usermanagement{
+    & > .create-user-container{
+        @apply flex flex-col w-full rounded-xl shadow-xl p-12 gap-2 max-md:p-5;
+
+        & > .create-user-title{
+            @apply flex flex-row mb-2 gap-2 w-full;
+            & > .title{
+                & h2{
+                    @apply text-sm font-bold;
+                }
+                & p{
+                    @apply text-xs;
+                    color: var(--text-gray);
+                }
+            }
+        }
+        & > .input-row{
+            @apply flex flex-row gap-5 w-full max-md:flex-col;
+        }
+    }
+    & > .user-management-table{
+        @apply flex flex-col w-full rounded-xl shadow-xl p-5;
+    }
+}

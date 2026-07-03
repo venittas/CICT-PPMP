@@ -12,6 +12,8 @@ import PpmpMasterlist from './pages/masterlist/PpmpMasterlist';
 import ProcurementMonitor from './pages/monitoring/ProcurementMonitor';
 import InLieuReallocation from './pages/reallocation/InLieuReallocation';
 import InLieuApprovals from './pages/approvals/InLieuApprovals';
+import UserManagement from './pages/usermanagement/UserManagement';
+import Settings from './pages/settings/Settings';
 
 function App() {
 
@@ -49,6 +51,8 @@ function AppWrapper() {
             <Route path="/procurement-monitor" element={<ProcurementMonitor />} />
             <Route path="/in-lieu-reallocation" element={<InLieuReallocation />} />
             <Route path="/in-lieu-approvals" element={<InLieuApprovals />} />
+            <Route path="/user-management" element={<UserManagement />} />
+            <Route path="/settings" element={<Settings />} />
         </Routes>
     </>
   )

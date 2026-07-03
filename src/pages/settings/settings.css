@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+.page-container.settings{
+    & > .profile-container, & > .security-container{
+        @apply flex flex-col w-full rounded-xl shadow-xl p-12 gap-2 max-md:p-5;
+
+        & > .profile-title, & > .security-title{
+            @apply flex flex-row mb-2 gap-2 w-full;
+            & > .title{
+                & h2{
+                    @apply text-sm font-bold;
+                }
+                & p{
+                    @apply text-xs;
+                    color: var(--text-gray);
+                }
+            }
+        }
+        & > .input-row{
+            @apply flex flex-row gap-5 w-full max-md:flex-col;
+        }
+    }
+    & > .security-container{
+        & > ul {
+            @apply flex flex-col items-start justify-center gap-2 w-full px-5;
+            color: var(--text-gray);
+
+            & > li {
+                @apply flex gap-2 text-xs;
+            }
+            & > .valid {
+                    @apply text-green-500;
+            }
+        }
+    }
+}
