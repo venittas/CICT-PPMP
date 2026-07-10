@@ -35,7 +35,7 @@ export default function Toast({ message, type, duration = 3000, onClose }: Toast
                 {type === "warning" && <IconAlertTriangle size={24} />}
                 {type === "info" && <IconExclamationCircle size={24} />}
             </div>
-            
+        
             <p>{message}</p>
         </div>
     );
