@@ -1,7 +1,16 @@
 import { type JSX } from 'react';
 import './dashboard-card.css';
 
-export default function DashboardCard({ icon, iconColor, title, description, value, color, additionalInfo }: { icon: JSX.Element; iconColor: string; title: string; description: string; value: number; color: string; additionalInfo?: string }) {
+interface DashboardCardProps {
+    icon: JSX.Element;
+    iconColor: string;
+    title: string;
+    description: string;
+    value: number;
+    color: string;
+    additionalInfo?: string;
+}
+export default function DashboardCard({ icon, iconColor, title, description, value, color, additionalInfo }: DashboardCardProps) {
     return (
         <div className="dashboard-card">
             <div className={`icon ${iconColor}`}>

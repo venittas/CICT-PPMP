@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserManagementTable from "../../components/tables/user_management_table/UserManagementTable";
 import "./user-management.css";
 import { IconUser, IconEye, IconEyeOff } from '@tabler/icons-react';
+import LoadingWrapper from "../../components/wrappers/loading wrapper/LoadingWrapper";
+import TableSkeleton from "../../components/skeleton/TableSkeleton";
 
 interface User {
     userId: number;
@@ -13,6 +15,9 @@ interface User {
 }
 
 export default function UserManagement() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
+
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [departmentRole, setDepartmentRole] = useState('Staff');
@@ -53,6 +58,18 @@ export default function UserManagement() {
             status: "Active"
         },
     ]);
+
+    useEffect(() => {
+        const loadPpmpReallocationData = async () => {
+            try {
+                await new Promise(resolve => setTimeout(resolve, 500));
+            } finally {
+                setIsInitialLoading(false);
+            }
+        };
+
+        loadPpmpReallocationData();
+    }, []);
 
     function togglePasswordVisibility() {
         setIsPasswordVisible(!isPasswordVisible);
@@ -154,7 +171,9 @@ export default function UserManagement() {
                 <button className="btn-primary-rd-shadow" disabled>Create Account</button>
             </div>}
       </div>
+      <LoadingWrapper isLoading={isInitialLoading} skeleton={<TableSkeleton />}>
         <UserManagementTable data={users} />
+      </LoadingWrapper>
     </main>
   );
 }

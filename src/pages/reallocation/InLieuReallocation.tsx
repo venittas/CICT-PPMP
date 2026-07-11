@@ -3,10 +3,12 @@ import { IconPrinter, IconTransfer, IconX, IconCheck, IconSearch, IconShoppingCa
 import alabIcon from "../../assets/icons/alab.svg";
 import NewItemCard from "../../components/cards/new_item_card/NewItemCard";
 import LieuItemCard from "../../components/cards/lieu_item_card/LieuItemCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InfoNote from "../../components/notes/info_note/InfoNote";
 import WarningNote from "../../components/notes/warning_note/WarningNote";
 import ViewInLieu from "../../components/dialogs/view_in_lieu/ViewInLieu";
+import LoadingWrapper from "../../components/wrappers/loading wrapper/LoadingWrapper";
+import InLieuReallocationSkeleton from "../../components/skeleton/skeleton_pages/InLieuReallocationSkeleton";
 
 interface NewItem {
     itemId: number;
@@ -38,6 +40,18 @@ export default function InLieuReallocation() {
     const [isInitialLoading, setIsInitialLoading] = useState(true);
 
     const [isPrintPROpen, setPrintPROpen] = useState(false);
+
+    useEffect(() => {
+        const loadPpmpReallocationData = async () => {
+            try {
+                await new Promise(resolve => setTimeout(resolve, 500));
+            } finally {
+                setIsInitialLoading(false);
+            }
+        };
+
+        loadPpmpReallocationData();
+    }, []);
 
     const [ppmpReallocationData, setPpmpReallocationData] = useState<ppmpReallocationData[]>([
         { itemId: 1, itemName: "Solid State Drive (1TB NVMe Gen4)", unitMeasurement: "piece", plannedQuantity: 10, availableQuantity: 9, pendingQuantity: 1, fulfilledQuantity: 0, priceCatalog: 4500.00 },
@@ -162,31 +176,36 @@ export default function InLieuReallocation() {
                         </div>
                         <div className="title-button-container">
                             <h3><IconTransform size={24} color="red"/> Available Lieu Pool</h3>
-                            <button className="btn-alab"><img src={alabIcon} alt="ALAB Icon" className="w-5 h-5" />Suggest Optimization</button>
+                            {newItemsArray.length > 0 && requiredBudget > 0 && isNewItemsValid ?
+                                (<button className="btn-alab"><img src={alabIcon} alt="ALAB Icon" className="w-5 h-5" />Suggest Optimization</button>) : (
+                                <button className="btn-alab" disabled><img src={alabIcon} alt="ALAB Icon" className="w-5 h-5" />Suggest Optimization</button>
+                                )}
                         </div>
-                        <div className="lieu-items-card-container">
-                            {ppmpReallocationData?.map((item) => {
-                                const selectedItemInfo = selectedLieuItems.find(selected => selected.itemId === item.itemId);
-                                const isSelected = !!selectedItemInfo;
-                                const currentReduceQty = selectedItemInfo ? selectedItemInfo.reduceQuantity : 0;
+                        <LoadingWrapper isLoading={isInitialLoading} skeleton={<InLieuReallocationSkeleton />}>
+                            <div className="lieu-items-card-container">
+                                {ppmpReallocationData?.map((item) => {
+                                    const selectedItemInfo = selectedLieuItems.find(selected => selected.itemId === item.itemId);
+                                    const isSelected = !!selectedItemInfo;
+                                    const currentReduceQty = selectedItemInfo ? selectedItemInfo.reduceQuantity : 0;
 
-                                return item.availableQuantity > 0 && (
-                                    <LieuItemCard 
-                                        key={item.itemId}
-                                        id={item.itemId}
-                                        itemName={item.itemName}
-                                        unitMeasurement={item.unitMeasurement}
-                                        priceCatalog={item.priceCatalog}
-                                        plannedQuantity={item.plannedQuantity}
-                                        availableQuantity={item.availableQuantity}
-                                        isSelected={isSelected}
-                                        reduceQuantity={currentReduceQty}
-                                        onToggle={() => handleToggleLieuItem(item)}
-                                        onQuantityChange={handleUpdateLieuQuantity}
-                                    />
-                                );
-                            })}
-                        </div>
+                                    return item.availableQuantity > 0 && (
+                                        <LieuItemCard 
+                                            key={item.itemId}
+                                            id={item.itemId}
+                                            itemName={item.itemName}
+                                            unitMeasurement={item.unitMeasurement}
+                                            priceCatalog={item.priceCatalog}
+                                            plannedQuantity={item.plannedQuantity}
+                                            availableQuantity={item.availableQuantity}
+                                            isSelected={isSelected}
+                                            reduceQuantity={currentReduceQty}
+                                            onToggle={() => handleToggleLieuItem(item)}
+                                            onQuantityChange={handleUpdateLieuQuantity}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </LoadingWrapper>
                     </div>
                 </div>
                 {remainingBudget > 0 && newItemsArray.length > 0 && requiredBudget > 0 && isNewItemsValid && isOldItemsValid ?(

@@ -5,6 +5,10 @@
         opacity: 0;
         transform: translateX(100%);
     }
+    50% {
+        opacity: 0.5;
+        transform: translateX(-10%);
+    }
     100% {
         opacity: 1;
         transform: translateX(0);
@@ -15,6 +19,10 @@
         opacity: 1;
         transform: translateX(0);
     }
+    50% {
+        opacity: 0.5;
+        transform: translateX(-10%);
+    }
     100% {
         opacity: 0;
         transform: translateX(100%);
@@ -22,24 +30,47 @@
 }
 
 .toast {
-    @apply relative flex flex-row items-center justify-between p-2 px-4 bg-white rounded-lg shadow-lg gap-2 transition-all duration-300 ease-in-out pointer-events-auto;
+    @apply relative flex flex-row items-center justify-start p-2 px-6 pr-10 bg-white rounded-lg gap-2 transition-all duration-300 ease-in-out pointer-events-auto;
     animation: slideIn 0.3s ease-out forwards;
-
+    box-shadow: -2px 4px 12px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    ::after {
+            @apply absolute top-1 left-1 w-2 h-7/8 rounded-full;
+            content: '';
+        }
     &.closing {
         animation: slideOut 0.3s ease-in forwards;
     }
+    & > .icon {
+        @apply text-white;
+        &.green { @apply bg-green-500; }
+        &.red { @apply bg-red-500; }
+        &.yellow { @apply bg-yellow-500; }
+        &.blue { @apply bg-blue-500; }
+    }
 
     &.success {
-        @apply border-l-4 border-green-500 text-green-700;
+        @apply border-green-500 text-green-500;
+        ::after {
+            @apply bg-green-500;
+        }
     }
     &.error {
-        @apply border-l-4 border-red-500 text-red-700;
+        @apply border-red-500 text-red-500;
+        ::after {
+            @apply bg-red-500;
+        }
     }
     &.warning {
-        @apply border-l-4 border-yellow-500 text-yellow-700;
+        @apply border-yellow-500 text-yellow-500;
+        ::after {
+            @apply bg-yellow-500;
+        }
     }
     &.info {
-        @apply border-l-4 border-blue-500 text-blue-700;
+        @apply border-blue-500 text-blue-500;
+        ::after {
+            @apply bg-blue-500;
+        }
     }
     & > p {
         @apply text-sm font-semibold;

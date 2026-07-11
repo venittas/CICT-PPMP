@@ -88,7 +88,12 @@
         @apply -translate-y-0.5;
         animation: gradientShift 1.5s ease infinite, firePulse 1.2s infinite;
     }
-
+    &:disabled {
+        @apply cursor-not-allowed opacity-30 shadow-none;
+        background: linear-gradient(-45deg, var(--primary), var(--secondary), #ff7b00, var(--primary));
+        background-size: 300% 300%;
+        animation: none;
+    }
     &:active {
         @apply translate-y-0 scale-[0.98];
     }

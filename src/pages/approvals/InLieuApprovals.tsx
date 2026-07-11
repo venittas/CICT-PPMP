@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import InLieuApprovalTable from "../../components/tables/in_lieu_approval_table/InLieuApprovalTable";
 import "./in-lieu-approvals.css";
+import LoadingWrapper from "../../components/wrappers/loading wrapper/LoadingWrapper";
+import TableSkeleton from "../../components/skeleton/TableSkeleton";
 
 interface Item{
     itemId: number;
@@ -26,6 +29,20 @@ interface InLieuApprovalData {
 }
 
 export default function InLieuApprovals() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+    useEffect(() => {
+        const loadInLieuApprovalData = async () => {
+            try {
+                await new Promise(resolve => setTimeout(resolve, 500));
+            } finally {
+                setIsInitialLoading(false);
+            }
+        };
+
+        loadInLieuApprovalData();
+    }, []);
 
     const inLieuApprovalData: InLieuApprovalData[] = [
         {
@@ -120,8 +137,10 @@ export default function InLieuApprovals() {
     ];
 
     return (
-        <div className="page-container approvals">
-            <InLieuApprovalTable data={inLieuApprovalData} />
-        </div>
+        <main className="page-container approvals">
+            <LoadingWrapper isLoading={isInitialLoading} skeleton={<TableSkeleton />}>
+                <InLieuApprovalTable data={inLieuApprovalData} />
+            </LoadingWrapper>
+        </main>
     )
 }
