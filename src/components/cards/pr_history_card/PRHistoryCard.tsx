@@ -4,6 +4,7 @@ import "./pr-history-card.css";
 import { IconClock, IconCircleDashedCheck, IconPrinter, IconChecklist, IconCancel } from '@tabler/icons-react';
 import {notify, confirm} from "../../dialogs/global_dialog/DialogService";
 import { toast } from "../../toast/ToastService";
+import { showCircleLoadingDialog } from "../../dialogs/circle_loading_dialog/CircleLoadingDialogService";
 
 interface PRHistoryCardProps {
     prId: number;
@@ -24,7 +25,13 @@ export default function PRHistoryCard({prId, quantity, itemName, unitMeasurement
         confirm("Arrive", "Are you sure you want to mark this PR as arrived?", "info", "Yes Mark as Arrived")
             .then((confirmed) => {
                 if (confirmed) {
-                    toast.success("PR marked as arrived successfully!");
+                    const loading = showCircleLoadingDialog();
+
+                    setTimeout(() => {
+                        toast.success("PR marked as arrived successfully!");
+                        loading();
+                    }, 1000);
+
                 }
             });
     }

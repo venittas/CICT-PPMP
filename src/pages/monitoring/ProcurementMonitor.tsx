@@ -43,7 +43,7 @@ export default function ProcurementMonitor() {
     const [totalFulfilledItemCount, setTotalFulfilledItemCount] = useState(58);
         
     useEffect(() => {
-        const loadDashboardData = async () => {
+        const loadPpmpMonitoringData = async () => {
             try {
                 await new Promise(resolve => setTimeout(resolve, 500));
             } finally {
@@ -51,7 +51,7 @@ export default function ProcurementMonitor() {
             }
         };
 
-        loadDashboardData();
+        loadPpmpMonitoringData();
     }, []);
 
     const ItemsCountCardData: ItemsCountCardData[] = [

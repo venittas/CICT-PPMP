@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./settings.css";
 import { IconUser, IconEye, IconEyeOff, IconShield, IconCheck, IconX } from '@tabler/icons-react';
+import LoadingWrapper from "../../components/wrappers/loading wrapper/LoadingWrapper";
+import SettingsSkeleton from "../../components/skeleton/skeleton_pages/SettingsSkeleton";
 
 export default function Settings() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
+
     const [email, setEmail] = useState("user@example.com");
     const [initialFullName, setInitialFullName] = useState("John Doe");
     const [fullName, setFullName] = useState(initialFullName);
@@ -33,6 +38,18 @@ export default function Settings() {
             errorMessage!.textContent = '';
         }
     }
+
+    useEffect(() => {
+        const loadSettingsData = async () => {
+            try {
+                await new Promise(resolve => setTimeout(resolve, 500));
+            } finally {
+                setIsInitialLoading(false);
+            }
+        };
+
+        loadSettingsData();
+    }, []);
 
     function handleNewPasswordChange(e : React.ChangeEvent<HTMLInputElement>){
         const temp: string = e.target.value;
@@ -100,18 +117,20 @@ export default function Settings() {
                         <p>Your Account Information</p>
                     </div>
                 </div>
-                <div className="field-group">
-                    <label htmlFor="fullName">Full Name</label>
-                    <input type="text" id="fullName" value={fullName} onChange={handleFullNameChange} />
-                    <p className="error-message" id="fullnameError"></p>
-                </div>
-                <div className="field-group">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" disabled value={email} className="text-gray-500"/>
-                </div>
-                {(fullName !== '' && fullName !== initialFullName) && (
-                    <button className="btn-primary-rd-shadow">Update Profile</button>
-                )}
+                <LoadingWrapper isLoading={isInitialLoading} skeleton={<SettingsSkeleton />}>
+                    <div className="field-group">
+                        <label htmlFor="fullName">Full Name</label>
+                        <input type="text" id="fullName" value={fullName} onChange={handleFullNameChange} />
+                        <p className="error-message" id="fullnameError"></p>
+                    </div>
+                    <div className="field-group">
+                        <label htmlFor="email">Email</label>
+                        <input type="email" id="email" disabled value={email} className="text-gray-500"/>
+                    </div>
+                    {(fullName !== '' && fullName !== initialFullName) && (
+                        <button className="btn-primary-rd-shadow">Update Profile</button>
+                    )}
+                </LoadingWrapper>
             </div>
             <div className="security-container">
                 <div className="security-title">

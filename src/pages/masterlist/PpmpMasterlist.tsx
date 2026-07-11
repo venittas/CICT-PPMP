@@ -81,7 +81,7 @@ export default function PpmpMasterlist() {
 ]);
     
     useEffect(() => {
-        const loadDashboardData = async () => {
+        const loadPpmpTableData = async () => {
             try {
                 await new Promise(resolve => setTimeout(resolve, 500));
             } finally {
@@ -89,7 +89,7 @@ export default function PpmpMasterlist() {
             }
         };
 
-        loadDashboardData();
+        loadPpmpTableData();
     }, []);
 
     const ItemsCountCardData: {icon: string, title: string, count: number, color: string}[] = [
