@@ -34,7 +34,7 @@ export default function UploadPPMP({ fiscalYears, isOpen, onClose }: UploadPPMPP
     const [mapColumnsStep, setMapColumnsStep] = useState("upcoming");
     const [previewImportStep, setPreviewImportStep] = useState("upcoming");
 
-    const year = "2021";
+    const year = new Date().getFullYear().toString();
 
     useEffect(() => {
         const dialog = dialogRef.current;
@@ -167,12 +167,21 @@ export default function UploadPPMP({ fiscalYears, isOpen, onClose }: UploadPPMPP
     }
 
     async function handleImport() {
-        confirm("Overwrite Existing Data", "Note: Current fiscal year is already present in the system. Uploading a new PPMP will overwrite the existing data for this year.", "warning", "Yes, Overwrite and Import")
-        .then((confirmed) => {
-            if (confirmed) {
-                proceedImport();
-            }
-        })
+        if(isPpmpExist){
+            confirm("Overwrite Existing Data", "Note: Current fiscal year is already present in the system. Uploading a new PPMP will overwrite the existing data for this year.", "warning", "Yes, Overwrite")
+            .then((confirmed) => {
+                if (confirmed) {
+                    proceedImport();
+                }
+            });
+        }else{
+            confirm("Import PPMP", "Note: This will import the PPMP for the current fiscal year.", "info", "Continue Importing PPMP")
+            .then((confirmed) => {
+                if (confirmed) {
+                    proceedImport();
+                }
+            });
+        }
     }
 
     const proceedImport = async () => {
