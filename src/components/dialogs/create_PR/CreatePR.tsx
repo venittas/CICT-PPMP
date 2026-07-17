@@ -3,7 +3,6 @@ import { IconFileStack, IconChartHistogram, IconClock, IconCircleDashedCheck, Ic
 import { useEffect, useRef, useState } from "react";
 import PrintPR from "../print_PR/PrintPR";
 import { getAccessToken, getUserID } from "../../../../supadb"
-import { notify, confirm } from "../../dialogs/global_dialog/DialogService";
 import { toast } from "../../toast/ToastService";
 import { useOutletContext } from "react-router";
 import { showCircleLoadingDialog } from "../circle_loading_dialog/CircleLoadingDialogService";
