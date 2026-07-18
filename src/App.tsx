@@ -47,7 +47,7 @@ function PrivateLayout() {
             try {
                 const [fiscalResponse, headerResponse] = await Promise.all([
                     fetch("https://test-ppmp.onrender.com/api/fiscal_years", {
-                        method: "GET",
+                        method: "POST",
                         headers: { Authorization: `Bearer ${accessToken}` }
                     }),
                     fetch("https://test-ppmp.onrender.com/api/user/header_info", {
@@ -84,6 +84,7 @@ function PrivateLayout() {
                 console.error("Error fetching initial data:", error);
                 toast.error("Network error. Please try again later.");
             } finally {
+                console.log(selectedFiscalYear);
                 setIsCheckingAuth(false);
             }
         };
