@@ -38,7 +38,7 @@ export default function PRHistoryCard({prId, quantity, itemId, itemName, unitMea
 
                     try {
                         const response = await fetch("https://test-ppmp.onrender.com/api/procurement_status/", {
-                            method: "PUT",
+                            method: "POST",
                             body: formData,
                             headers: {
                                 "Authorization": `Bearer ${await getAccessToken() || ""}`
@@ -74,7 +74,7 @@ export default function PRHistoryCard({prId, quantity, itemId, itemName, unitMea
 
                     try {
                         const response = await fetch("https://test-ppmp.onrender.com/api/procurement_status/", {
-                            method: "PUT",
+                            method: "POST",
                             body: formData,
                             headers: {
                                 "Authorization": `Bearer ${await getAccessToken() || ""}`
