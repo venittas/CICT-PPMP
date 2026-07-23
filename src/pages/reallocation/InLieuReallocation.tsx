@@ -241,7 +241,7 @@ export default function InLieuReallocation() {
             formData.append("Sum", JSON.stringify(requiredBudget))
             formData.append("NewItems", JSON.stringify(newItemsArray))
 
-            const suggestionResponse = await fetch("http://127.0.0.1:8000/api/smart-suggest/", {
+            const suggestionResponse = await fetch("https://test-ppmp.onrender.com/api/smart-suggest/", {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -266,7 +266,6 @@ export default function InLieuReallocation() {
             loading()
         }
     }
-
 
     return (
         <main className="page-container reallocation">
